@@ -1,16 +1,15 @@
 module.exports = {
-
-  title: '我的vue后台工程',
-
-  /**
-   * @type {boolean} true | false
-   * @description Whether fix the header
-   */
-  fixedHeader: false,
+  title: 'Taowd的vue后台工程',
 
   /**
    * @type {boolean} true | false
-   * @description Whether show the logo in sidebar
+   * @description 是否固定页眉
    */
-  sidebarLogo: false
+  fixedHeader: true,
+
+  /**
+   * @type {boolean} true | false
+   * @description 是否在侧边栏中显示徽标
+   */
+  sidebarLogo: true
 }
