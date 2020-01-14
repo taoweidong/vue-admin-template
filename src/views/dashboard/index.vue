@@ -10,10 +10,10 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import GithubCorner from '@/components/GithubCorner'
 import PanelGroup from './components/PanelGroup'
 import LineChart from './components/LineChart'
-import { mapGetters } from 'vuex'
 
 const lineChartData = {
   newVisitis: {
