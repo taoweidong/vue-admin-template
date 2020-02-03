@@ -8,13 +8,14 @@ import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['/login'] // no redirect whitelist
+// 无需检查权限的路由白名单
+const whiteList = ['/login']
 
 router.beforeEach(async(to, from, next) => {
-  // start progress bar
+  // 进度条开启
   NProgress.start()
 
-  // set page title
+  // 设置页面标题
   document.title = getPageTitle(to.meta.title)
 
   // determine whether the user has logged in
@@ -22,21 +23,21 @@ router.beforeEach(async(to, from, next) => {
 
   if (hasToken) {
     if (to.path === '/login') {
-      // if is logged in, redirect to the home page
+      // 如果已经登录，则跳转到主页面
       next({ path: '/' })
       NProgress.done()
     } else {
+      // 检查当前用户是否已经拉取玩user_info信息
       const hasGetUserInfo = store.getters.name
       if (hasGetUserInfo) {
         next()
       } else {
         try {
-          // get user info
+          // 调用后台接口，拉取user_info信息
           await store.dispatch('user/getInfo')
-
           next()
         } catch (error) {
-          // remove token and go to login page to re-login
+          // 如果获取user_info信息异常，则清除token信息，并且跳转到登录页面
           await store.dispatch('user/resetToken')
           Message.error(error || 'Has Error')
           next(`/login?redirect=${to.path}`)
@@ -45,8 +46,7 @@ router.beforeEach(async(to, from, next) => {
       }
     }
   } else {
-    /* has no token*/
-
+    // 如果没有Token，检查该路由是否在白名单中，如果在白名单中则不需要进行跳转
     if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly
       next()
@@ -59,6 +59,6 @@ router.beforeEach(async(to, from, next) => {
 })
 
 router.afterEach(() => {
-  // finish progress bar
+  // 进度条关闭
   NProgress.done()
 })

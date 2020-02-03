@@ -13,24 +13,24 @@
           {{ scope.$index }}
         </template>
       </el-table-column>
-      <el-table-column label="Title">
+      <el-table-column label="学号" width="110" align="center">
         <template slot-scope="scope">
-          {{ scope.row.title }}
+          {{ scope.row.id }}
         </template>
       </el-table-column>
-      <el-table-column label="Author" width="110" align="center">
+      <el-table-column label="姓名" width="110" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.author }}</span>
+          <span>{{ scope.row.username }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Pageviews" width="110" align="center">
+      <el-table-column label="年龄" width="110" align="center">
         <template slot-scope="scope">
-          {{ scope.row.pageviews }}
+          {{ scope.row.username }}
         </template>
       </el-table-column>
       <el-table-column
         class-name="status-col"
-        label="Status"
+        label="状态"
         width="110"
         align="center"
       >
@@ -43,12 +43,17 @@
       <el-table-column
         align="center"
         prop="created_at"
-        label="Display_time"
+        label="生日"
         width="200"
       >
         <template slot-scope="scope">
           <i class="el-icon-time" />
-          <span>{{ scope.row.display_time }}</span>
+          <span>{{ scope.row.birthday }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="个人备注">
+        <template slot-scope="scope">
+          {{ scope.row.id }}
         </template>
       </el-table-column>
     </el-table>
@@ -81,8 +86,9 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getList().then(response => {
-        this.list = response.data.items
+
+      getList({ test: 'Hello' }).then(response => {
+        this.list = response.data
         this.listLoading = false
       })
     }

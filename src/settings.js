@@ -11,5 +11,16 @@ module.exports = {
    * @type {boolean} true | false
    * @description 是否在侧边栏中显示徽标
    */
-  sidebarLogo: true
+  sidebarLogo: true,
+  /**
+   * @type {boolean} true | false
+   * @description Whether need tagsView
+   */
+  tagsView: true,
+  /**
+   * @type {boolean} true | false
+   * @description Whether show the settings right-panel
+   */
+  showSettings: false
 }
+

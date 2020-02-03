@@ -21,7 +21,11 @@ const mutations = {
 }
 
 const actions = {
-  // user login
+  /**
+   * 用户登录功能
+   * @param {store信息} param0
+   * @param {用户登录信息} userInfo
+   */
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
@@ -38,7 +42,9 @@ const actions = {
     })
   },
 
-  // get user info
+  /**
+   * 通过Token信息获取用户的基本信息
+   */
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token)
