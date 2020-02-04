@@ -21,6 +21,8 @@ export default {
     ...mapGetters(['roles'])
   },
   created() {
+    console.log('当前用户角色为：' + this.roles)
+
     if (!this.roles.includes('admin')) {
       this.currentRole = 'editorDashboard'
     }

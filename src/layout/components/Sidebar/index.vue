@@ -49,7 +49,6 @@ export default {
       return variables
     },
     isCollapse() {
-      console.log('LOGO---------->' + !this.sidebar.opened)
       return !this.sidebar.opened
     }
   }

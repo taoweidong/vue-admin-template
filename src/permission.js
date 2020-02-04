@@ -27,20 +27,19 @@ router.beforeEach(async(to, from, next) => {
       next({ path: '/' })
       NProgress.done()
     } else {
-      // 检查当前用户是否已经拉取玩user_info信息
-      const hasGetUserInfo = store.getters.name
-      if (hasGetUserInfo) {
+      // 检查该用户是否拥有角色信息
+      const hasRoles = store.getters.roles && store.getters.roles.length > 0
+      if (hasRoles) {
         next()
       } else {
         try {
           // 调用后台接口，拉取user_info信息
-          // await store.dispatch('user/getInfo')
           const { roles } = await store.dispatch('user/getInfo')
 
-          // generate accessible routes map based on roles
+          // 基于角色生成可访问路由图
           const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
 
-          // dynamically add accessible routes
+          // d动态添加可访问路由
           router.addRoutes(accessRoutes)
 
           // hack method to ensure that addRoutes is complete

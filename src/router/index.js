@@ -21,6 +21,8 @@ import Layout from '@/layout'
     title: 'title'               the name show in sidebar and breadcrumb (recommend set)
     icon: 'svg-name'             the icon show in the sidebar
     breadcrumb: false            如果设置为false，则该项将隐藏在breadcrumb中（默认为true）
+    noCache: true                if set true, the page will no be cached(default is false)
+    affix: true                  如果设置为true，则标记将粘贴在tags-view视图中
     activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
   }
  */
@@ -32,6 +34,17 @@ import Layout from '@/layout'
  * 所有权限通用路由表
  */
 export const constantRoutes = [
+  {
+    path: '/redirect',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/redirect/:path*',
+        component: () => import('@/views/redirect/index')
+      }
+    ]
+  },
   {
     path: '/login',
     component: () => import('@/views/login/index'),
@@ -53,7 +66,7 @@ export const constantRoutes = [
       {
         path: 'dashboard',
         name: 'Dashboard',
-        meta: { title: '主页', icon: 'dashboard' },
+        meta: { title: '主页', icon: 'dashboard', affix: true },
         component: () => import('@/views/dashboard/index')
       }
     ]
@@ -95,6 +108,7 @@ export const constantRoutes = [
   },
   {
     path: 'external-link',
+    redirect: '/external-link',
     component: Layout,
     name: 'externalLink',
     meta: { title: '常用链接', icon: 'example' },
@@ -110,6 +124,20 @@ export const constantRoutes = [
       path: 'https://cn.vuejs.org/v2/guide/',
       meta: { title: 'Vue主页', icon: 'international' }
     }
+    ]
+  },
+  {
+    path: '/profile',
+    component: Layout,
+    redirect: '/profile/index',
+    hidden: true,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/profile/index'),
+        name: 'Profile',
+        meta: { title: 'Profile', icon: 'user', noCache: true }
+      }
     ]
   },
 
