@@ -34,8 +34,18 @@ router.beforeEach(async(to, from, next) => {
       } else {
         try {
           // 调用后台接口，拉取user_info信息
-          await store.dispatch('user/getInfo')
-          next()
+          // await store.dispatch('user/getInfo')
+          const { roles } = await store.dispatch('user/getInfo')
+
+          // generate accessible routes map based on roles
+          const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+
+          // dynamically add accessible routes
+          router.addRoutes(accessRoutes)
+
+          // hack method to ensure that addRoutes is complete
+          // set the replace: true, so the navigation will not leave a history record
+          next({ ...to, replace: true })
         } catch (error) {
           // 如果获取user_info信息异常，则清除token信息，并且跳转到登录页面
           await store.dispatch('user/resetToken')

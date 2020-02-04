@@ -96,11 +96,20 @@ export const constantRoutes = [
   {
     path: 'external-link',
     component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: '外链', icon: 'link' }
-      }
+    name: 'externalLink',
+    meta: { title: '常用链接', icon: 'example' },
+    children: [{
+      path: 'https://panjiachen.gitee.io/vue-element-admin-site/zh/',
+      meta: { title: 'API文档', icon: 'wechat' }
+    },
+    {
+      path: 'https://element.eleme.cn/#/zh-CN/component/installation',
+      meta: { title: 'ElementUI', icon: 'link' }
+    },
+    {
+      path: 'https://cn.vuejs.org/v2/guide/',
+      meta: { title: 'Vue主页', icon: 'international' }
+    }
     ]
   },
 
