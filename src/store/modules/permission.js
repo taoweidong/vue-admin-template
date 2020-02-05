@@ -51,8 +51,6 @@ const actions = {
     return new Promise(resolve => {
       let accessedRoutes
 
-      console.log('当前用户角色为：' + roles)
-
       if (roles.includes('admin')) {
         accessedRoutes = asyncRoutes || []
       } else {

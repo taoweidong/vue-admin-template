@@ -11,6 +11,9 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 // 无需检查权限的路由白名单
 const whiteList = ['/login']
 
+/**
+ * 全局钩子函数
+ */
 router.beforeEach(async(to, from, next) => {
   // 进度条开启
   NProgress.start()
@@ -21,7 +24,10 @@ router.beforeEach(async(to, from, next) => {
   // determine whether the user has logged in
   const hasToken = getToken()
 
+  console.log('用户所拥有的Token：' + hasToken)
+
   if (hasToken) {
+    console.log('来源页面-------->' + to.path)
     if (to.path === '/login') {
       // 如果已经登录，则跳转到主页面
       next({ path: '/' })
@@ -29,11 +35,12 @@ router.beforeEach(async(to, from, next) => {
     } else {
       // 检查该用户是否拥有角色信息
       const hasRoles = store.getters.roles && store.getters.roles.length > 0
+      console.log('用户当前角色' + store.getters.roles)
       if (hasRoles) {
         next()
       } else {
         try {
-          // 调用后台接口，拉取user_info信息
+          // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
           const { roles } = await store.dispatch('user/getInfo')
 
           // 基于角色生成可访问路由图
@@ -60,7 +67,7 @@ router.beforeEach(async(to, from, next) => {
       // in the free login whitelist, go directly
       next()
     } else {
-      // other pages that do not have permission to access are redirected to the login page.
+      // 其他页面如果没有权限的话全部重定向到登录页面
       next(`/login?redirect=${to.path}`)
       NProgress.done()
     }

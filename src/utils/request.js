@@ -50,14 +50,28 @@ service.interceptors.response.use(
 
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 20000) {
-      Message({
-        message: res.message || 'Error',
-        type: 'error',
-        duration: 5 * 1000
-      })
-
+      // Message({
+      //   message: res.message || 'Error',
+      //   type: 'error',
+      //   duration: 5 * 1000
+      // })
+      if (res.code === 50008) {
+        MessageBox.confirm(
+          res.data || 'Error',
+          '确定登出',
+          {
+            confirmButtonText: '重新登录',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }
+        ).then(() => {
+          store.dispatch('user/resetToken').then(() => {
+            location.reload()
+          })
+        })
+      }
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+      if (res.code === 50012 || res.code === 50014) {
         // to re-login
         MessageBox.confirm(
           '你已被登出，可以取消继续留在此页面，或者重新登录',

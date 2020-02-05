@@ -50,7 +50,7 @@
             placeholder="Role Description"
           />
         </el-form-item>
-        <el-form-item label="Menus">
+        <!-- <el-form-item label="Menus">
           <el-tree
             ref="tree"
             :check-strictly="checkStrictly"
@@ -60,7 +60,7 @@
             node-key="path"
             class="permission-tree"
           />
-        </el-form-item>
+        </el-form-item> -->
       </el-form>
       <div style="text-align:right;">
         <el-button
@@ -113,7 +113,7 @@ export default {
   },
   created() {
     // Mock: get all routes and roles list from server
-    this.getRoutes()
+    // this.getRoutes()
     this.getRoles()
   },
   methods: {
@@ -186,8 +186,8 @@ export default {
       this.checkStrictly = true
       this.role = deepClone(scope.row)
       this.$nextTick(() => {
-        const routes = this.generateRoutes(this.role.routes)
-        this.$refs.tree.setCheckedNodes(this.generateArr(routes))
+        // const routes = this.generateRoutes(this.role.routes)
+        // this.$refs.tree.setCheckedNodes(this.generateArr(routes))
         // set checked state of a node not affects its father and child nodes
         this.checkStrictly = false
       })
