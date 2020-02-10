@@ -345,3 +345,14 @@ export function removeClass(ele, cls) {
     ele.className = ele.className.replace(reg, ' ')
   }
 }
+
+export function exportData(res) {
+  const link = document.createElement('a')
+  const blob = new Blob([res.data], { type: 'application/vnd.ms-excel' })
+  link.style.display = 'none'
+  link.href = URL.createObjectURL(blob)
+  link.setAttribute('download', decodeURI(res.headers['filename']))
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}

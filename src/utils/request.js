@@ -46,15 +46,17 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
+    // 如果是导出文件
+    const headers = response.headers
+    if (headers['content-type'] === 'application/vnd.ms-excel;charset=UTF-8') {
+      return response
+    }
+
+    // 其他的数据请求
     const res = response.data
 
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 20000) {
-      // Message({
-      //   message: res.message || 'Error',
-      //   type: 'error',
-      //   duration: 5 * 1000
-      // })
       if (res.code === 50008) {
         MessageBox.confirm(
           res.data || 'Error',

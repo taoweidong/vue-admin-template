@@ -36,3 +36,16 @@ export function deleteRole(id) {
     method: 'delete'
   })
 }
+/**
+ *导出请求
+ * @param {查询参数} query
+ */
+export function getExportData(query) {
+  return request({
+    url: '/vue-element-admin/role/export',
+    method: 'post',
+    params: query,
+    responseType: 'blob'
+  })
+}
+
